@@ -9,6 +9,7 @@ const auth = require('./auth.js');
 const cors = require('cors');
 const articles = require('./articles.js');
 const profile = require('./profile.js');
+const { loginLimiter } = require('./rateLimit');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.get('/', hello);
 app.set('userObjs', {});
+app.use('/login', loginLimiter);
 
 auth(app);
 articles(app);
